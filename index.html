@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics Academy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⚛ Physics Academy</h1><span id="who"></span><button id="logout" hidden>Log out</button>
+  </header>
+  <main>
+    <section id="setup" class="card" hidden>
+      <h2>Connect Supabase</h2>
+      <p>Follow SETUP-GUIDE.md, then enter your Project URL and publishable/anon key. Never enter a secret/service-role key.</p>
+      <input id="url" placeholder="https://your-project.supabase.co">
+      <input id="key" placeholder="Supabase publishable / anon key">
+      <button id="save-config">Save connection</button>
+    </section>
+    <section id="login" class="card" hidden>
+      <h2>Sign in</h2>
+      <form id="login-form">
+        <label>Owner email or Student Code<input id="identifier" required autocomplete="username"></label>
+        <label>Password<div class="password"><input id="password" type="password" required autocomplete="current-password"><button type="button" class="eye" data-target="password">Show</button></div></label>
+        <button>Sign in</button>
+      </form>
+      <p id="login-error" class="error"></p>
+    </section>
+    <section id="app" hidden>
+      <nav>
+        <button data-tab="home">Home</button>
+        <button data-tab="lessons">Courses</button>
+        <button data-tab="exams">Exams</button>
+        <button data-tab="homework">Homework</button>
+        <button data-tab="sessions">Sessions</button>
+        <button data-tab="owner" id="owner-tab" hidden>Owner Dashboard</button>
+      </nav>
+      <p id="message" class="error"></p>
+      <div id="view"></div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="script.js"></script>
+  <script src="courses.js"></script>
+</body>
+</html>
