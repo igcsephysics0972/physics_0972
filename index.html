@@ -1,47 +1,269 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#54b7d4">
   <title>Physics Academy</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header>
-    <h1>⚛ Physics Academy</h1><span id="who"></span><button id="logout" hidden>Log out</button>
+
+  <div class="science-confetti" aria-hidden="true">
+    <span>⚛</span>
+    <span>⚙</span>
+    <span>🚀</span>
+    <span>🧲</span>
+    <span>🧪</span>
+    <span>⚗</span>
+  </div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">⚛</span>
+      <div>
+        <h1>Physics Academy</h1>
+        <p>Explore • Discover • Achieve</p>
+      </div>
+    </div>
+
+    <div class="account">
+      <span id="who"></span>
+      <button id="logout" class="secondary" hidden>
+        Log out
+      </button>
+    </div>
   </header>
+
   <main>
-    <section id="setup" class="card" hidden>
-      <h2>Connect Supabase</h2>
-      <p>Follow SETUP-GUIDE.md, then enter your Project URL and publishable/anon key. Never enter a secret/service-role key.</p>
-      <input id="url" placeholder="https://your-project.supabase.co">
-      <input id="key" placeholder="Supabase publishable / anon key">
-      <button id="save-config">Save connection</button>
+
+    <section id="login" class="card login-card">
+
+      <div class="login-art" aria-hidden="true">
+        <span>⚛</span>
+        <span>🚀</span>
+        <span>⚙</span>
+      </div>
+
+      <div class="login-content">
+        <span class="eyebrow">WELCOME BACK</span>
+
+        <h2>Ready to learn something amazing?</h2>
+
+        <p class="muted">
+          Sign in to continue your physics journey.
+        </p>
+
+        <form id="login-form">
+
+          <label>
+            Email or student code
+            <input
+              id="identifier"
+              autocomplete="username"
+              placeholder="Enter email or student code"
+              required
+            >
+          </label>
+
+          <label>
+            Password
+            <input
+              id="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter password"
+              required
+            >
+          </label>
+
+          <button class="primary-action" type="submit">
+            Sign in →
+          </button>
+
+        </form>
+
+        <p id="login-error" class="error" role="alert"></p>
+      </div>
+
     </section>
-    <section id="login" class="card" hidden>
-      <h2>Sign in</h2>
-      <form id="login-form">
-        <label>Owner email or Student Code<input id="identifier" required autocomplete="username"></label>
-        <label>Password<div class="password"><input id="password" type="password" required autocomplete="current-password"><button type="button" class="eye" data-target="password">Show</button></div></label>
-        <button>Sign in</button>
-      </form>
-      <p id="login-error" class="error"></p>
-    </section>
+
     <section id="app" hidden>
-      <nav>
-        <button data-tab="home">Home</button>
-        <button data-tab="lessons">Courses</button>
-        <button data-tab="exams">Exams</button>
-        <button data-tab="homework">Homework</button>
-        <button data-tab="sessions">Sessions</button>
-        <button data-tab="owner" id="owner-tab" hidden>Owner Dashboard</button>
+
+      <div class="page-intro">
+        <div>
+          <span class="eyebrow">YOUR LEARNING SPACE</span>
+          <h2>Let's make science exciting! ✨</h2>
+        </div>
+
+        <span class="page-atom" aria-hidden="true">⚛</span>
+      </div>
+
+      <nav id="nav" aria-label="Main navigation">
+
+        <button type="button" data-tab="home">
+          🏠 Home
+        </button>
+
+        <button type="button" data-tab="lessons">
+          📚 Courses
+        </button>
+
+        <button type="button" data-tab="exams">
+          📝 Exams
+        </button>
+
+        <button type="button" data-tab="homework">
+          ✏️ Homework
+        </button>
+
+        <button type="button" data-tab="sessions">
+          💻 Zoom Sessions
+        </button>
+
+        <button
+          type="button"
+          data-tab="owner"
+          class="owner-only"
+          hidden
+        >
+          ⚙️ Owner Dashboard
+        </button>
+
+        <button
+          type="button"
+          data-tab="attendance"
+          class="owner-only"
+          hidden
+        >
+          📍 Attendance
+        </button>
+
+        <button
+          type="button"
+          data-tab="reports"
+          class="owner-only"
+          hidden
+        >
+          📊 Reports
+        </button>
+
       </nav>
-      <p id="message" class="error"></p>
+
+      <p id="message" class="error" role="status"></p>
+
       <div id="view"></div>
+
     </section>
+
   </main>
+
+  <footer class="site-footer">
+    <span aria-hidden="true">⚛</span>
+    Physics Academy
+    <span class="footer-dot">•</span>
+    Learning is an adventure
+  </footer>
+
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+  <!-- QR GENERATOR -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- SAVE THE QR GENERATOR BEFORE LOADING THE SCANNER -->
+  <script>
+    window.PhysicsQRGenerator = window.QRCode;
+  </script>
+
+  <!-- CAMERA QR SCANNER -->
+  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+  <!-- PDF GENERATOR -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+
+  <!-- QR COMPATIBILITY ADAPTER -->
+  <script>
+    (function () {
+      "use strict";
+
+      const Generator = window.PhysicsQRGenerator;
+
+      if (typeof Generator !== "function") {
+        console.error("Physics Academy QR library failed to load.");
+        return;
+      }
+
+      // Restore the QR generator if another library replaced it.
+      window.QRCode = Generator;
+
+      // Provide the toCanvas API expected by script.js.
+      window.QRCode.toCanvas = async function (
+        target,
+        value,
+        options = {}
+      ) {
+        if (!(target instanceof HTMLCanvasElement)) {
+          throw new Error("QR target canvas not found.");
+        }
+
+        const size = options.width || 240;
+
+        const holder = document.createElement("div");
+
+        holder.style.position = "fixed";
+        holder.style.left = "-10000px";
+        holder.style.top = "-10000px";
+        holder.style.visibility = "hidden";
+
+        document.body.appendChild(holder);
+
+        try {
+          new Generator(holder, {
+            text: String(value),
+            width: size,
+            height: size,
+            colorDark: "#142a65",
+            colorLight: "#ffffff",
+            correctLevel: Generator.CorrectLevel.M
+          });
+
+          const source = holder.querySelector("canvas");
+
+          if (!source) {
+            throw new Error(
+              "QR generator could not create an image."
+            );
+          }
+
+          target.width = size;
+          target.height = size;
+
+          const context = target.getContext("2d");
+
+          context.fillStyle = "#ffffff";
+          context.fillRect(0, 0, size, size);
+          context.drawImage(source, 0, 0, size, size);
+
+          return target;
+        } finally {
+          holder.remove();
+        }
+      };
+
+      console.log(
+        "Physics Academy QR ready:",
+        typeof window.QRCode.toCanvas
+      );
+    })();
+  </script>
+
+  <!-- EXISTING WEBSITE FILES -->
+  <script src="theme.js"></script>
   <script src="script.js"></script>
-  <script src="courses.js"></script>
+  <script src="academy-updates.js"></script>
+
 </body>
 </html>

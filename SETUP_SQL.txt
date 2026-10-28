@@ -1,0 +1,14 @@
+-- Run once in the NEW Physics Academy Supabase project's SQL Editor.
+create table if not exists public.zoom_attendance_overrides (
+  session_id uuid not null references public.sessions(id) on delete cascade,
+  student_id uuid not null references public.profiles(id) on delete cascade,
+  status text not null check (status in ('present','late','absent')),
+  updated_at timestamptz not null default now(),
+  primary key (session_id,student_id)
+);
+alter table public.zoom_attendance_overrides enable row level security;
+drop policy if exists "Owner can manage Zoom attendance" on public.zoom_attendance_overrides;
+create policy "Owner can manage Zoom attendance" on public.zoom_attendance_overrides
+for all to authenticated
+using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'owner'))
+with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'owner'));
